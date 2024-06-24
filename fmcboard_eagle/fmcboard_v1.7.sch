@@ -13539,6 +13539,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C118" library="passives" deviceset="CAPACITOR" device="0402_CAP" value="0.1uF"/>
 <part name="SUPPLY24" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="J4" library="Seeed-Connector" library_urn="urn:adsk.eagle:library:478" deviceset="DIP-BLACK-FEMALE-HEADER-VERT(4P-2.54)" device="" package3d_urn="urn:adsk.eagle:package:33137/1" value="4p-2.54"/>
+<part name="J6" library="Seeed-Connector" library_urn="urn:adsk.eagle:library:478" deviceset="DIP-BLACK-FEMALE-HEADER-VERT(4P-2.54)" device="" package3d_urn="urn:adsk.eagle:package:33137/1" value="4p-2.54"/>
 </parts>
 <sheets>
 <sheet>
@@ -13769,6 +13770,7 @@ Case 3216</text>
 </instance>
 <instance part="SUPPLY24" gate="GND" x="106.68" y="22.86" smashed="yes"/>
 <instance part="J4" gate="G$1" x="63.5" y="90.17" smashed="yes"/>
+<instance part="J6" gate="G$1" x="38.1" y="90.17" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -14110,6 +14112,11 @@ Case 3216</text>
 <junction x="-68.58" y="63.5"/>
 <label x="-76.2" y="60.96" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="P$2"/>
+<wire x1="30.48" y1="91.44" x2="20.32" y2="91.44" width="0.1524" layer="91"/>
+<label x="20.32" y="91.44" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="SCLIN" class="0">
 <segment>
@@ -14120,6 +14127,11 @@ Case 3216</text>
 <junction x="-25.4" y="63.5"/>
 <wire x1="-25.4" y1="63.5" x2="-30.48" y2="63.5" width="0.1524" layer="91"/>
 <label x="-33.02" y="60.96" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="P$1"/>
+<wire x1="30.48" y1="93.98" x2="20.32" y2="93.98" width="0.1524" layer="91"/>
+<label x="20.32" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="H5" class="0">
@@ -14230,6 +14242,11 @@ Case 3216</text>
 <wire x1="-53.34" y1="63.5" x2="-48.26" y2="63.5" width="0.1524" layer="91"/>
 <label x="-53.34" y="60.96" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="P$4"/>
+<wire x1="30.48" y1="86.36" x2="20.32" y2="86.36" width="0.1524" layer="91"/>
+<label x="20.32" y="86.36" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="SCLIN2" class="0">
 <segment>
@@ -14240,6 +14257,11 @@ Case 3216</text>
 <junction x="-10.16" y="63.5"/>
 <wire x1="-10.16" y1="63.5" x2="-5.08" y2="63.5" width="0.1524" layer="91"/>
 <label x="-10.16" y="60.96" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="P$3"/>
+<wire x1="30.48" y1="88.9" x2="20.32" y2="88.9" width="0.1524" layer="91"/>
+<label x="20.32" y="88.9" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="C10" class="0">
