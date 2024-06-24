@@ -51,6 +51,7 @@ module altera_eth_top # (
 	 //FMC inputs / outputs
 	 input fmc_in[31:0], // only 15:0 used by first eth port, next 16 used by second eth port
 	 output fmc_out[31:0] // ""
+
 );
 
 	 
@@ -212,17 +213,20 @@ module altera_eth_top # (
 	 assign      arduino_sda = dac_sda;
 	 
 	 assign		 i2c_etheron_trigger = etheron_button;
-	 assign		 i2c_dac_trigger = dac_button;
+	 assign		 i2c_dac_trigger = dac_button || dac_change_out;
 	 assign      dac_sequence_switch = led_heartbeat;
 	 
-	 reg chip_id = 1'b0;
-	 reg [3:0] dac_id = 4'b0;
-	 reg [11:0] vol = 12'd1000;
+	 wire chip_id_out;
+	 wire [3:0] channel_out;
+	 wire [11:0] vol_out;
+	 wire dac_change_out;
+	 
+	 
 	 //I2C
 	 i2c_generator i2c_generator (
 	     .clk_in 							(fast1_clk),
 		  .reset_in 						(reset_n),
-		  .button_in						(i2c_dac_trigger),
+		  .button_in						(dac_change_out),
 		  .button_ether_in				(i2c_etheron_trigger),
 		  .slow_clk_out					(i2c_slow_clk_out),
 		  .slow_clk_stgr_out				(dac_scl),
@@ -233,9 +237,9 @@ module altera_eth_top # (
 		  .reset_led						(i2c_reset_led),
 		  .sequence_switch				(dac_sequence_switch),
 		  
-		  .chip_id                    (chip_id),
-	     .dac_id		               (dac_id),
-	     .vol				            (vol)
+		  .chip_id                    (chip_id_out),
+	     .dac_id		               (dac_id_out),
+	     .vol				            (vol_out)
 	 );
     
     // DUT
@@ -388,7 +392,12 @@ module altera_eth_top # (
                         .eth_1588_wait_limit                        (1'b1),
                         .eth_1588_start_tod_sync                    (),
                         .eth_1588_channel_ready                     (2'b11),
-                        .eth_1588_traffic_controller_error_n        ()
+                        .eth_1588_traffic_controller_error_n        (),
+								
+								.chip_id_out         (chip_id_out),
+								.channel_out         (channel_out),
+								.vol_out             (vol_out),
+								.change_dac_out      (change_dac_out)
                     );
                     
                 end

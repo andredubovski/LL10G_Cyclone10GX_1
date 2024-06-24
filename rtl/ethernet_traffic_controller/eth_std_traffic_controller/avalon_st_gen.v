@@ -44,7 +44,10 @@ module avalon_st_gen
 ,output reg            tx_eop          // Avalon-ST TX EndOfPacket
 ,output reg     [2:0]  tx_empty        // Avalon-ST TX Empty
 ,output wire           tx_error        // Avalon-ST TX Error
-
+,output wire 	 		  chip_id_out
+,output wire 	 [3:0]  channel_out
+,output wire    [11:0] vol_out
+,output wire           change_dac_out
 );
 
 
@@ -91,6 +94,11 @@ module avalon_st_gen
  parameter ADDR_offset = 8'h23;
  
  parameter ADDR_mode = 8'h24;
+ 
+ parameter ADDR_chip_id = 8'h25;
+ parameter ADDR_channel = 8'h26;
+ parameter ADDR_vol = 8'h27;
+ 
  parameter ADDR_CNTDASA		= 8'hf0;
  parameter ADDR_CNTSATLEN	= 8'hf1;
  parameter ADDR_CNTDATA		= 8'hf2;
@@ -110,6 +118,18 @@ reg     [31:0] packet_tx_count;                 // Register to count the number 
 reg     [31:0] rand_seed0;                      // Register to program seed number for prbs generator [31:0]
 reg     [31:0] rand_seed1;                      // Register to program seed number for prbs generator [63:32]
 reg     [31:0] rand_seed2;                      // Register to program seed number for prbs generator [91:64]
+
+
+//dacwrite command registers
+reg chip_id;
+reg [3:0] channel;
+reg [11:0] vol;
+reg change_dac; //start flag
+assign chip_id_out = chip_id;
+assign channel_out = channel;
+assign vol_out = vol;
+assign change_dac_out = change_dac;
+
 
 reg    random_payload;                            // Select what type of data pattern:0=incremental, 1=random
 reg    random_length;                             // Select what type of packet length:0=fixed, 1=random
@@ -440,6 +460,7 @@ wire fifo_clk;//fifo_clk is what is used for writing
 	//Read registers
 	always @ (posedge reset or posedge clk)
    begin
+		change_dac <= 1'b0;
       if (reset) begin
 			do_test_counter_data <= 1'b0;
 			fifo_clk_prescale <= 32'h0;
@@ -488,6 +509,9 @@ wire fifo_clk;//fifo_clk is what is used for writing
 		
 		else if (write & address == ADDR_offset) trigger_offset<= writedata[7:0];
 		else if (write & address == ADDR_mode) do_xor<= writedata[7:0];
+		else if (write & address == ADDR_chip_id) chip_id <= writedata;
+		else if (write & address == ADDR_channel) channel <= writedata[3:0];
+		else if (write & address == ADDR_vol) vol <= writedata[11:0]; change_dac <= 1'b1;
    end
 	
 // ____________________________________________________________________________

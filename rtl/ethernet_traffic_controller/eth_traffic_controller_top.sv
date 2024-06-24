@@ -1,5 +1,5 @@
 // (C) 2001-2018 Intel Corporation. All rights reserved.
-// Your use of Intel Corporation's design tools, logic functions and other 
+//Your use of Intel Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
 // files from any of the foregoing (including device programming or simulation 
 // files), and any associated documentation or information are expressly subject 
@@ -12,7 +12,7 @@
 
 
 module eth_traffic_controller_top  #(
-	parameter 	NUM_CHANNELS = 2,					// must set to 2 only
+	parameter 	NUM_CHANNELS = 1,					// must set to 2 only
 	parameter 	TSTAMP_FP_WIDTH = 4
 )(
 	input		wire				                     	refclk_10g,
@@ -77,6 +77,12 @@ module eth_traffic_controller_top  #(
 	output	 wire		[1:0]												eth_1588_start_tod_sync,
 	input	 wire   	[1:0]												eth_1588_channel_ready,
 	output wire															eth_1588_traffic_controller_error_n
+	
+	
+	,output wire 	 		  chip_id_out
+   ,output wire 	 [3:0]  channel_out
+   ,output wire    [11:0] vol_out
+   ,output wire           change_dac_out
 );
 
 wire	mux_sel;
@@ -370,7 +376,12 @@ generate
 			.avl_st_rx_error		(eth_std_avl_st_rx_error[i]),
 			.avl_st_rx_ready		(eth_std_avl_st_rx_ready[i]),
 			.avl_st_rx_sop			(eth_std_avl_st_rx_sop[i]),
-			.avl_st_rx_val        (eth_std_avl_st_rx_val[i])
+			.avl_st_rx_val       (eth_std_avl_st_rx_val[i]),
+			
+			.chip_id_out         (chip_id_out),
+	      .channel_out         (channel_out),
+	      .vol_out             (vol_out),
+	      .change_dac_out      (change_dac_out)
 		);
 	end        
 endgenerate
