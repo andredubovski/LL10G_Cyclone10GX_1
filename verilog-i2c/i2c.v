@@ -124,25 +124,25 @@ module i2c_generator (
 		      if (~button_in && ~button_state && button_chg) begin
 				    button_state <= 1'b1;
 		      end else if(button_state)begin
-					 if (sequence_switch)begin
-						 if (pulse_index < SEQ_LEN) begin
-							  pulse_gen <= pulse_sequence[SEQ_LEN - pulse_index - 1];
-							  pulse_index <= pulse_index + 1;
-						 end else begin
-							  pulse_index <= 0;
-							  pulse_gen <= 1;
-							  button_state <= 1'b0;
-						 end
+					 //if (sequence_switch)begin
+					 //	 if (pulse_index < SEQ_LEN) begin
+					 //		  pulse_gen <= pulse_sequence[SEQ_LEN - pulse_index - 1];
+					 //		  pulse_index <= pulse_index + 1;
+					 //	 end else begin
+					 //		  pulse_index <= 0;
+					 //		  pulse_gen <= 1;
+					 //		  button_state <= 1'b0;
+					 //	 end
+					 //end else begin
+					if (pulse_index < SEQ_LEN) begin
+						  pulse_gen <= composite_sequence[SEQ_LEN - pulse_index - 1];
+						  pulse_index <= pulse_index + 1;
 					 end else begin
-						if (pulse_index < SEQ_LEN) begin
-							  pulse_gen <= composite_sequence[SEQ_LEN - pulse_index - 1];
-							  pulse_index <= pulse_index + 1;
-						 end else begin
-							  pulse_index <= 0;
-							  pulse_gen <= 1;
-							  button_state <= 1'b0;
-						 end
+						  pulse_index <= 0;
+						  pulse_gen <= 1;
+						  button_state <= 1'b0;
 					 end
+				
             end else begin
                 pulse_index <= 0;
                 pulse_gen <= 1;

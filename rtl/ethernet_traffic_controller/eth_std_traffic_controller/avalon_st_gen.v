@@ -98,6 +98,7 @@ module avalon_st_gen
  parameter ADDR_chip_id = 8'h25;
  parameter ADDR_channel = 8'h26;
  parameter ADDR_vol = 8'h27;
+ parameter ADDR_button = 8'h28;
  
  parameter ADDR_CNTDASA		= 8'hf0;
  parameter ADDR_CNTSATLEN	= 8'hf1;
@@ -124,7 +125,7 @@ reg     [31:0] rand_seed2;                      // Register to program seed numb
 reg chip_id;
 reg [3:0] channel;
 reg [11:0] vol;
-reg change_dac; //start flag
+reg change_dac=1'b1; //start flag
 assign chip_id_out = chip_id;
 assign channel_out = channel;
 assign vol_out = vol;
@@ -460,7 +461,6 @@ wire fifo_clk;//fifo_clk is what is used for writing
 	//Read registers
 	always @ (posedge reset or posedge clk)
    begin
-		change_dac <= 1'b0;
       if (reset) begin
 			do_test_counter_data <= 1'b0;
 			fifo_clk_prescale <= 32'h0;
@@ -511,7 +511,8 @@ wire fifo_clk;//fifo_clk is what is used for writing
 		else if (write & address == ADDR_mode) do_xor<= writedata[7:0];
 		else if (write & address == ADDR_chip_id) chip_id <= writedata;
 		else if (write & address == ADDR_channel) channel <= writedata[3:0];
-		else if (write & address == ADDR_vol) vol <= writedata[11:0]; change_dac <= 1'b1;
+		else if (write & address == ADDR_vol) vol <= writedata[11:0]; 
+		else if (write & address == ADDR_button) change_dac <= writedata;
    end
 	
 // ____________________________________________________________________________

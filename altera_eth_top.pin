@@ -461,7 +461,7 @@ rx_serial_data[0](n)         : F25       : input  : Current Mode Logic (CML) :  
 rx_serial_data[0]            : F26       : input  : Current Mode Logic (CML) :         : 1D        : Y              
 GND                          : F27       : gnd    :                   :         :           :                
 GND                          : F28       : gnd    :                   :         :           :                
-fmc_out[31]                  : G1        : output : 1.8 V             :         : 3B        : N              
+fmc_out[16]                  : G1        : output : 1.8 V             :         : 3B        : N              
 GND                          : G2        : gnd    :                   :         :           :                
 NC                           : G3        :        :                   :         :           :                
 NC                           : G4        :        :                   :         :           :                
@@ -548,7 +548,7 @@ tx_serial_data[1]            : J28       : output : High Speed Differential I/O 
 fmc_in[1]                    : K1        : input  : 1.8 V             :         : 3B        : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : K2        :        :                   :         : 3B        :                
 GND                          : K3        : gnd    :                   :         :           :                
-fmc_out[22]                  : K4        : output : 1.8 V             :         : 3B        : N              
+fmc_out[26]                  : K4        : output : 1.8 V             :         : 3B        : N              
 NC                           : K5        :        :                   :         :           :                
 NC                           : K6        :        :                   :         :           :                
 NC                           : K7        :        :                   :         :           :                
@@ -576,7 +576,7 @@ GND                          : K28       : gnd    :                   :         
 fmc_in[0]                    : L1        : input  : 1.8 V             :         : 3B        : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : L2        :        :                   :         : 3B        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : L3        :        :                   :         : 3B        :                
-fmc_out[20]                  : L4        : output : 1.8 V             :         : 3B        : N              
+fmc_out[24]                  : L4        : output : 1.8 V             :         : 3B        : N              
 NC                           : L5        :        :                   :         :           :                
 NC                           : L6        :        :                   :         :           :                
 NC                           : L7        :        :                   :         :           :                
@@ -603,8 +603,8 @@ GXB_NC                       : L27       :        :                   :         
 GXB_NC                       : L28       :        :                   :         : 1D        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : M1        :        :                   :         : 3B        :                
 GND                          : M2        : gnd    :                   :         :           :                
-fmc_out[19]                  : M3        : output : 1.8 V             :         : 3B        : N              
-fmc_out[17]                  : M4        : output : 1.8 V             :         : 3B        : N              
+fmc_out[27]                  : M3        : output : 1.8 V             :         : 3B        : N              
+fmc_out[23]                  : M4        : output : 1.8 V             :         : 3B        : N              
 NC                           : M5        :        :                   :         :           :                
 NC                           : M6        :        :                   :         :           :                
 NC                           : M7        :        :                   :         :           :                
@@ -658,9 +658,9 @@ GND                          : N26       : gnd    :                   :         
 GXB_NC                       : N27       :        :                   :         : 1D        :                
 GXB_NC                       : N28       :        :                   :         : 1D        :                
 GND                          : P1        : gnd    :                   :         :           :                
-fmc_out[18]                  : P2        : output : 1.8 V             :         : 3B        : N              
-fmc_out[16]                  : P3        : output : 1.8 V             :         : 3B        : N              
-fmc_out[21]                  : P4        : output : 1.8 V             :         : 3B        : N              
+fmc_out[19]                  : P2        : output : 1.8 V             :         : 3B        : N              
+fmc_out[18]                  : P3        : output : 1.8 V             :         : 3B        : N              
+fmc_out[25]                  : P4        : output : 1.8 V             :         : 3B        : N              
 NC                           : P5        :        :                   :         :           :                
 NC                           : P6        :        :                   :         :           :                
 NC                           : P7        :        :                   :         :           :                
@@ -686,7 +686,7 @@ GXB_GND*                     : P26       :        :                   :         
 GND                          : P27       : gnd    :                   :         :           :                
 GND                          : P28       : gnd    :                   :         :           :                
 fmc_out[15]                  : R1        : output : 1.8 V             :         : 3B        : Y              
-fmc_out[29]                  : R2        : output : 1.8 V             :         : 3B        : N              
+fmc_out[21]                  : R2        : output : 1.8 V             :         : 3B        : N              
 GND                          : R3        : gnd    :                   :         :           :                
 fmc_out[12]                  : R4        : output : 1.8 V             :         : 3B        : Y              
 fmc_out[13]                  : R5        : output : 1.8 V             :         : 3B        : Y              
@@ -714,7 +714,7 @@ GND                          : R26       : gnd    :                   :         
 GXB_NC                       : R27       :        :                   :         : 1D        :                
 GXB_NC                       : R28       :        :                   :         : 1D        :                
 fmc_out[14]                  : T1        : output : 1.8 V             :         : 3B        : Y              
-fmc_out[26]                  : T2        : output : 1.8 V             :         : 3B        : N              
+fmc_out[17]                  : T2        : output : 1.8 V             :         : 3B        : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : T3        :        :                   :         : 3B        :                
 fmc_out[6]                   : T4        : output : 1.8 V             :         : 3B        : Y              
 VCCIO3B                      : T5        : power  :                   : 1.8V    : 3B        :                
@@ -741,14 +741,14 @@ GXB_GND*                     : T25       :        :                   :         
 GXB_GND*                     : T26       :        :                   :         : 1C        :                
 GND                          : T27       : gnd    :                   :         :           :                
 GND                          : T28       : gnd    :                   :         :           :                
-fmc_out[27]                  : U1        : output : 1.8 V             :         : 3B        : N              
+fmc_out[30]                  : U1        : output : 1.8 V             :         : 3B        : N              
 GND                          : U2        : gnd    :                   :         :           :                
 fmc_in[4]                    : U3        : input  : 1.8 V             :         : 3B        : Y              
 fmc_in[5]                    : U4        : input  : 1.8 V             :         : 3B        : Y              
 fmc_out[7]                   : U5        : output : 1.8 V             :         : 3B        : Y              
 fmc_out[8]                   : U6        : output : 1.8 V             :         : 3B        : Y              
 VCCIO3B                      : U7        : power  :                   : 1.8V    : 3B        :                
-fmc_out[25]                  : U8        : output : 1.8 V             :         : 3B        : N              
+fmc_out[31]                  : U8        : output : 1.8 V             :         : 3B        : N              
 VREFB3BN0                    : U9        : power  :                   : GND     : 3B        :                
 VCC                          : U10       : power  :                   : 0.9V    :           :                
 VCCP                         : U11       : power  :                   : 0.9V    :           :                
@@ -770,11 +770,11 @@ GND                          : U26       : gnd    :                   :         
 GXB_NC                       : U27       :        :                   :         : 1C        :                
 GXB_NC                       : U28       :        :                   :         : 1C        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : V1        :        :                   :         : 3B        :                
-fmc_out[28]                  : V2        : output : 1.8 V             :         : 3B        : N              
-fmc_out[23]                  : V3        : output : 1.8 V             :         : 3B        : N              
+fmc_out[20]                  : V2        : output : 1.8 V             :         : 3B        : N              
+fmc_out[28]                  : V3        : output : 1.8 V             :         : 3B        : N              
 VCCIO3B                      : V4        : power  :                   : 1.8V    : 3B        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : V5        :        :                   :         : 3B        :                
-fmc_out[24]                  : V6        : output : 1.8 V             :         : 3B        : N              
+fmc_out[29]                  : V6        : output : 1.8 V             :         : 3B        : N              
 fmc_out[9]                   : V7        : output : 1.8 V             :         : 3B        : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : V8        :        :                   :         : 3B        :                
 GND                          : V9        : gnd    :                   :         :           :                
@@ -799,7 +799,7 @@ GND                          : V27       : gnd    :                   :         
 GND                          : V28       : gnd    :                   :         :           :                
 GND                          : W1        : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : W2        :        :                   :         : 3B        :                
-fmc_out[30]                  : W3        : output : 1.8 V             :         : 3B        : N              
+fmc_out[22]                  : W3        : output : 1.8 V             :         : 3B        : N              
 fmc_out[4]                   : W4        : output : 1.8 V             :         : 3A        : Y              
 fmc_in[17]                   : W5        : input  : 1.8 V             :         : 3A        : N              
 VCCIO3A                      : W6        : power  :                   : 1.8V    : 3A        :                

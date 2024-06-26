@@ -53,9 +53,11 @@ set GEN_neg4dur				  	0x00000084
 set GEN_neg4pausedur			  	0x00000088
 set GEN_offset					  	0x0000008C
 set GEN_mode					  	0x00000090
+
 set GEN_chip_id					0x00000094
 set GEN_channel					0x00000098
 set GEN_vol							0x0000009C
+set GEN_button						0x000000A0
 
 
 #--with 1588

@@ -12,7 +12,7 @@
 
 
 module eth_traffic_controller_top  #(
-	parameter 	NUM_CHANNELS = 1,					// must set to 2 only
+	parameter 	NUM_CHANNELS = 2,					// must set to 2 only
 	parameter 	TSTAMP_FP_WIDTH = 4
 )(
 	input		wire				                     	refclk_10g,
@@ -79,10 +79,10 @@ module eth_traffic_controller_top  #(
 	output wire															eth_1588_traffic_controller_error_n
 	
 	
-	,output wire 	 		  chip_id_out
-   ,output wire 	 [3:0]  channel_out
-   ,output wire    [11:0] vol_out
-   ,output wire           change_dac_out
+	,output wire 	 [NUM_CHANNELS-1:0]		  chip_id_out
+   ,output wire 	 [NUM_CHANNELS-1:0][3:0]  channel_out
+   ,output wire    [NUM_CHANNELS-1:0][11:0] vol_out
+   ,output wire    [NUM_CHANNELS-1:0]       change_dac_out
 );
 
 wire	mux_sel;
@@ -378,10 +378,10 @@ generate
 			.avl_st_rx_sop			(eth_std_avl_st_rx_sop[i]),
 			.avl_st_rx_val       (eth_std_avl_st_rx_val[i]),
 			
-			.chip_id_out         (chip_id_out),
-	      .channel_out         (channel_out),
-	      .vol_out             (vol_out),
-	      .change_dac_out      (change_dac_out)
+			.chip_id_out         (chip_id_out[i]),
+	      .channel_out         (channel_out[i]),
+	      .vol_out             (vol_out[i]),
+	      .change_dac_out      (change_dac_out[i])
 		);
 	end        
 endgenerate

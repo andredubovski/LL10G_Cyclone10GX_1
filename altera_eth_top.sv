@@ -213,20 +213,55 @@ module altera_eth_top # (
 	 assign      arduino_sda = dac_sda;
 	 
 	 assign		 i2c_etheron_trigger = etheron_button;
-	 assign		 i2c_dac_trigger = dac_button || dac_change_out;
+	 assign		 i2c_dac_trigger = dac_button && dac_change;
 	 assign      dac_sequence_switch = led_heartbeat;
 	 
+	 // I2C console command interface
 	 wire chip_id_out;
 	 wire [3:0] channel_out;
 	 wire [11:0] vol_out;
 	 wire dac_change_out;
+	 
+	 //direct console command interface
+	 wire chip_id;
+	 wire [3:0] channel;
+	 wire [11:0] vol;
+	 wire dac_change;
+	 reg chip_id_reg = 1'b0;
+	 reg [3:0] channel_reg = 4'b0;
+	 reg [11:0] vol_reg = 12'd2000;
+	 reg dac_change_reg = 1'b1;
+	 assign chip_id = chip_id_reg;
+	 assign channel = channel_reg;
+	 assign vol = vol_reg;
+	 assign dac_change = dac_change_reg;
+	 
+	 wire console_write;
+	 wire [31:0] console_writedata;
+	 
+	 assign console_write = csr_traffic_controller_write[0];
+	 assign console_writedata = csr_traffic_controller_writedata[0];
+	 assign console_address = csr_traffic_controller_address[0][9:2];
+	 
+	 parameter ADDR_chip_id = 8'h25;
+	 parameter ADDR_channel = 8'h26;
+	 parameter ADDR_vol = 8'h27;
+	 parameter ADDR_button = 8'h28;
+	 
+	 always @ (posedge mac64b_clk)
+    begin
+		if (console_write & console_address == ADDR_chip_id) chip_id_reg <= console_writedata[0];
+		else if (console_write & console_address == ADDR_channel) channel_reg <= console_writedata[3:0];
+		else if (console_write & console_address == ADDR_vol) vol_reg <= console_writedata[11:0]; 
+		else if (console_write & console_address == ADDR_button) dac_change_reg <= console_writedata[0];
+    end
 	 
 	 
 	 //I2C
 	 i2c_generator i2c_generator (
 	     .clk_in 							(fast1_clk),
 		  .reset_in 						(reset_n),
-		  .button_in						(dac_change_out),
+		  .button_in						(i2c_dac_trigger),
 		  .button_ether_in				(i2c_etheron_trigger),
 		  .slow_clk_out					(i2c_slow_clk_out),
 		  .slow_clk_stgr_out				(dac_scl),
@@ -237,9 +272,9 @@ module altera_eth_top # (
 		  .reset_led						(i2c_reset_led),
 		  .sequence_switch				(dac_sequence_switch),
 		  
-		  .chip_id                    (chip_id_out),
-	     .dac_id		               (dac_id_out),
-	     .vol				            (vol_out)
+		  .chip_id 							(chip_id),
+	     .dac_id		               (dac_id),
+	     .vol				            (vol)
 	 );
     
     // DUT
@@ -463,7 +498,12 @@ module altera_eth_top # (
                         .eth_1588_wait_limit                        (1'b1),
                         .eth_1588_start_tod_sync                    (),
                         .eth_1588_channel_ready                     (2'b11),
-                        .eth_1588_traffic_controller_error_n        ()
+                        .eth_1588_traffic_controller_error_n        (),
+								
+								.chip_id_out         (chip_id_out),
+								.channel_out         (channel_out),
+								.vol_out             (vol_out),
+								.change_dac_out      (change_dac_out)
                     );
                     
                 end
