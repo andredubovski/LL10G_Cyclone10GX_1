@@ -88,7 +88,7 @@ module altera_eth_top # (
 	 // Heartbeat fast
 	 reg [31:0] cnt_fast = 32'd0;
 	 reg led_clk_reg_fast;
-	 assign led_other = led_clk_reg_fast;
+	 assign led_other = chip_id_out[0]; // ANDRE AND TROY DEBUG OUTPUT FOR DACWRITE CONSOLE CMD
 	 always @(posedge fast1_clk) begin
 		if (cnt_fast == 32'h773594) // 12500000 (so should go at 9.765625*16/125 = 156.25/125 times other heartbeat)
 		begin
@@ -96,6 +96,11 @@ module altera_eth_top # (
 			led_clk_reg_fast <= ~led_clk_reg_fast;
 		end
 		else cnt_fast <= cnt_fast + 32'd1;
+	 end
+	 
+	 reg eth_on_state;
+	 initial begin
+	    eth_on_state <= 2'b1;
 	 end
     
     // Reset
@@ -213,14 +218,14 @@ module altera_eth_top # (
 	 assign      arduino_sda = dac_sda;
 	 
 	 assign		 i2c_etheron_trigger = etheron_button;
-	 assign		 i2c_dac_trigger = dac_button && dac_change;
+	 assign		 i2c_dac_trigger = dac_button && dac_change_out[0];
 	 assign      dac_sequence_switch = led_heartbeat;
 	 
 	 // I2C console command interface
-	 wire chip_id_out;
-	 wire [3:0] channel_out;
-	 wire [11:0] vol_out;
-	 wire dac_change_out;
+	 wire [1:0] chip_id_out;
+	 wire [1:0] [3:0] channel_out;
+	 wire [1:0] [11:0] vol_out;
+	 wire [1:0] dac_change_out;
 	 
 	 //direct console command interface
 	 wire chip_id;
@@ -272,9 +277,9 @@ module altera_eth_top # (
 		  .reset_led						(i2c_reset_led),
 		  .sequence_switch				(dac_sequence_switch),
 		  
-		  .chip_id 							(chip_id),
-	     .dac_id		               (dac_id),
-	     .vol				            (vol)
+		  .chip_id 							(chip_id_out[0]),
+	     .dac_id		               (channel_out[0]),
+	     .vol				            (vol_out[0])
 	 );
     
     // DUT
@@ -432,7 +437,7 @@ module altera_eth_top # (
 								.chip_id_out         (chip_id_out),
 								.channel_out         (channel_out),
 								.vol_out             (vol_out),
-								.change_dac_out      (change_dac_out)
+								.change_dac_out      (dac_change_out)
                     );
                     
                 end
@@ -503,7 +508,7 @@ module altera_eth_top # (
 								.chip_id_out         (chip_id_out),
 								.channel_out         (channel_out),
 								.vol_out             (vol_out),
-								.change_dac_out      (change_dac_out)
+								.change_dac_out      (dac_change_out)
                     );
                     
                 end

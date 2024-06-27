@@ -135,6 +135,7 @@
 	.tx_empty    (from_gen_tx_empty), 		// Avalon-ST Empty
 	.tx_error    (from_gen_tx_error), 		// Avalon-ST Error
 	.tx_ready    (to_gen_tx_ready),
+	
 	.chip_id_out (chip_id_out),
 	.channel_out (channel_out),
 	.vol_out     (vol_out),

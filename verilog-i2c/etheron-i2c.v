@@ -31,10 +31,15 @@ module ether_on (
 	 reg button_state = 1'b0;
 	 reg button_d;
 	 wire button_chg;
+	 reg [19:0] button_counter = 20'b0;
 	 
 	 always @(posedge clk_in) begin
 	     reset_btn = ~reset_in;
     end
+	 
+	 initial begin
+	     
+	 end
 	 
 	 
     // Clock Divider
@@ -71,7 +76,6 @@ module ether_on (
 				end
         end
     end
-	 
 	     // Pulse Sequence Generation State Machine
     always @(posedge slow_clk or negedge reset_in) begin
         if (~reset_in) begin
@@ -84,8 +88,10 @@ module ether_on (
 				button_d <= 0;
         end else begin
 		      button_d <= ether_button_in;
-		  
-		      if (~ether_button_in && ~button_state && button_chg) begin
+		      if (button_counter <= 20'd200_001) begin
+				    button_counter <= button_counter + 1;
+				end
+		      if ((~ether_button_in && ~button_state && button_chg) || (button_counter == 20'd200_000)) begin
 				    button_state <= 1'b1;
 		      end else if(button_state)begin
 					 slow_clk_counter = slow_clk_counter +1;

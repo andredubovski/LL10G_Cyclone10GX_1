@@ -194,12 +194,12 @@ proc dacwrite {chip_id channel vol} {
 	reg_write $GEN_BASE_ADDR $GEN_vol $vol
 }
 
-proc button {value} {
-	global GEN_BASE_ADDR
-	global GEN_button
-	puts "\t button set to $value " 
-	reg_write $GEN_BASE_ADDR $GEN_button $value
-}
+##proc button {value} {
+##	global GEN_BASE_ADDR
+##	global GEN_button
+##	puts "\t button set to $value " 
+##	reg_write $GEN_BASE_ADDR $GEN_button $value
+##}
 
 
 proc SET_1588_GO_MASTER {} {

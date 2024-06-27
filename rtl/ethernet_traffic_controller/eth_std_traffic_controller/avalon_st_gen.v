@@ -44,6 +44,7 @@ module avalon_st_gen
 ,output reg            tx_eop          // Avalon-ST TX EndOfPacket
 ,output reg     [2:0]  tx_empty        // Avalon-ST TX Empty
 ,output wire           tx_error        // Avalon-ST TX Error
+
 ,output wire 	 		  chip_id_out
 ,output wire 	 [3:0]  channel_out
 ,output wire    [11:0] vol_out
@@ -459,6 +460,8 @@ wire fifo_clk;//fifo_clk is what is used for writing
 	);
 
 	//Read registers
+	reg [12:0] change_dac_counter = 0;
+	parameter DAC_CHANGE_DELAY = 5000;
 	always @ (posedge reset or posedge clk)
    begin
       if (reset) begin
@@ -509,10 +512,20 @@ wire fifo_clk;//fifo_clk is what is used for writing
 		
 		else if (write & address == ADDR_offset) trigger_offset<= writedata[7:0];
 		else if (write & address == ADDR_mode) do_xor<= writedata[7:0];
-		else if (write & address == ADDR_chip_id) chip_id <= writedata;
+		else if (write & address == ADDR_chip_id) chip_id <= writedata[0];
 		else if (write & address == ADDR_channel) channel <= writedata[3:0];
-		else if (write & address == ADDR_vol) vol <= writedata[11:0]; 
-		else if (write & address == ADDR_button) change_dac <= writedata;
+		else if (write & address == ADDR_vol) begin
+			vol <= writedata[11:0];
+			change_dac <= 1'b0;
+		//else if (write & address == ADDR_button) change_dac <= writedata[0];
+		end
+		
+		else if (~change_dac && (change_dac_counter < DAC_CHANGE_DELAY)) begin
+				change_dac_counter <= change_dac_counter +1;
+		end else if (~change_dac && (change_dac_counter >= DAC_CHANGE_DELAY)) begin
+				change_dac <= 1'b1;
+				change_dac_counter <= 0;
+		end
    end
 	
 // ____________________________________________________________________________

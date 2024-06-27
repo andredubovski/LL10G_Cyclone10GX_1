@@ -1,4 +1,4 @@
-module i2c_generator (
+ module i2c_generator (
     input wire clk_in,         // Input clock (fast clock)
     input wire reset_in,       // Reset signal
     input wire button_in,      // Button input
